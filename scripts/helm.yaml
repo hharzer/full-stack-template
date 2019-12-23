@@ -15,7 +15,7 @@ full-stack:
   ingress:
     class: nginx
     namespace: nginx-ingress
-    oldRewritePolicy: false
+    oldRewritePolicy: true
     tls: true
     domains:
       - name: ${taito_domain}
@@ -108,6 +108,10 @@ full-stack:
         - fullname: ${taito_project}-${taito_env}-redis
         - fullname: ${taito_project}-${taito_env}-storage
       livenessInitialDelay: 120
+      db:
+        instance: ${taito_zone}:${taito_provider_region}:${db_database_instance}
+        port: 5432
+        proxySecret: ${taito_provider_db_proxy_secret}
       serviceAccount:
         secret: ${taito_provider_service_account_secret}
       secrets:
